@@ -15,10 +15,10 @@ public class operation {
     void add (){
         //insert sql statement
         String sql = "INSERT INTO PRODUCT VALUES ("
-                + product.productId + ", '"
-                + product.productName + "', '"
-                + product.description + "', "
-                + product.supplierId + ", "
+                + product.productId + ","
+                + product.productName + ","
+                + product.description + ", "
+                + product.supplierId + ","
                 + product.categoryId + ", "
                 + product.quantity + ", "
                 + product.reorderLevel + ", "
