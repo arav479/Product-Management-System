@@ -44,7 +44,8 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>pms.Main</mainClass>
+                    
+                    <mainClass>com.pms.ProductManagementApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>
