@@ -1,30 +1,30 @@
 package com.pms;
-
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-
+import java.sql.*;
 public class operation {
     Product product;
-    operation(Product product){
+    operation(Product product) throws SQLException {
         this.product = product;
     }
-    void add (){
-        //insert sql statement
-        String sql = "INSERT INTO PRODUCT VALUES ("
-                + product.productId + ","
-                + product.productName + ","
-                + product.description + ", "
-                + product.supplierId + ","
-                + product.categoryId + ", "
-                + product.quantity + ", "
-                + product.reorderLevel + ", "
-                + product.price + ")";
+    public void add() throws SQLException {
+        String sql = "INSERT INTO PRODUCT (PRODUCT_NAME, DESCRIPTION, CATEGORY_ID, SUPPLIER_ID, "
+                + "PRICE, QUANTITY, REORDER_LEVEL) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection con = DatabaseConnector.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, product.productName);
+            ps.setString(2, product.description);
+            ps.setInt(3, product.categoryId);
+            ps.setInt(4, product.supplierId);
+            ps.setDouble(5, product.price);
+            ps.setInt(6, product.quantity);
+            ps.setInt(7, product.reorderLevel);
+
+            ps.executeUpdate();
+            System.out.println("Product added");
+        }
     }
-    void update() {
+    public void update() {
         String sql = "UPDATE PRODUCT SET "
                 + "PRODUCT_NAME = ?, DESCRIPTION = ?, SUPPLIER_ID = ?, "
                 + "CATEGORY_ID = ?, QUANTITY = ?, REORDER_LEVEL = ?, PRICE = ?, "
@@ -51,7 +51,7 @@ public class operation {
         }
     }
 
-    void delete() {
+    public void delete() {
         String sql = "DELETE FROM PRODUCT WHERE PRODUCT_ID = ?";
 
         try (Connection con = new DatabaseConnector().connection;
@@ -66,9 +66,8 @@ public class operation {
             System.out.println("Delete failed: " + e.getMessage());
         }
     }
-
     // Searches by name (partial, case-insensitive) and prints the matches
-    void search() {
+    public void search() {
         String sql = "SELECT PRODUCT_ID, PRODUCT_NAME, DESCRIPTION, SUPPLIER_ID, CATEGORY_ID, "
                 + "QUANTITY, REORDER_LEVEL, PRICE "
                 + "FROM PRODUCT WHERE UPPER(PRODUCT_NAME) LIKE UPPER(?) "
