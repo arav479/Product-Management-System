@@ -10,6 +10,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /**
@@ -33,6 +35,14 @@ public class ProductController {
     private TextField quantityField;
     @FXML
     private TextField searchField;
+
+    @FXML private ProductPicker deleteProductPicker;
+    @FXML private Label deleteIdLabel;
+    @FXML private Label deleteNameLabel;
+    @FXML private Label deleteCategoryLabel;
+    @FXML private Label deletePriceLabel;
+    @FXML private Label deleteQuantityLabel;
+    @FXML private Button confirmDeleteButton;
 
     @FXML
     private TableView<Product> productTable;
@@ -73,6 +83,10 @@ public class ProductController {
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         loadProducts();
+        deleteProductPicker.setProducts(productList);
+        confirmDeleteButton.setDisable(true);
+        deleteProductPicker.selectedProductProperty().addListener((observable, oldValue, selected) ->
+                showDeleteDetails(selected));
 
         filteredProducts = new FilteredList<>(productList, product -> true);
         productTable.setItems(filteredProducts);
@@ -172,10 +186,9 @@ public class ProductController {
 
     @FXML
     private void deleteProduct() {
-        Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+        Product selectedProduct = deleteProductPicker.getSelectedProduct();
         if (selectedProduct == null) {
-            showAlert(Alert.AlertType.WARNING, "No Selection",
-                    "Please select a product from the table to delete.");
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Choose a product to delete.");
             return;
         }
 
@@ -195,8 +208,18 @@ public class ProductController {
         productList.remove(selectedProduct);
 
         productTable.refresh();
-        clearFields();
+        deleteProductPicker.clearSelection();
         showAlert(Alert.AlertType.INFORMATION, "Success", "Product deleted successfully.");
+    }
+
+    private void showDeleteDetails(Product product) {
+        boolean selected = product != null;
+        confirmDeleteButton.setDisable(!selected);
+        deleteIdLabel.setText(selected ? product.getProductId() : "—");
+        deleteNameLabel.setText(selected ? product.getProductName() : "—");
+        deleteCategoryLabel.setText(selected ? product.getCategory() : "—");
+        deletePriceLabel.setText(selected ? String.format("%.2f", product.getPrice()) : "—");
+        deleteQuantityLabel.setText(selected ? Integer.toString(product.getQuantity()) : "—");
     }
 
     @FXML
