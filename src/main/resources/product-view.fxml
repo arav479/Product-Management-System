@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,6 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import pms.ProductPicker?>
 
 <BorderPane xmlns="http://javafx.com/javafx/17"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -29,6 +31,7 @@
     </top>
 
     <center>
+      <ScrollPane fitToWidth="true" styleClass="content-box">
         <VBox spacing="16" styleClass="content-box">
             <padding>
                 <Insets top="18" right="20" bottom="18" left="20"/>
@@ -74,9 +77,34 @@
                 <HBox spacing="10" alignment="CENTER_LEFT">
                     <Button text="Add Product" onAction="#addProduct" styleClass="btn, btn-add"/>
                     <Button text="Update Product" onAction="#updateProduct" styleClass="btn, btn-update"/>
-                    <Button text="Delete Product" onAction="#deleteProduct" styleClass="btn, btn-delete"/>
                     <Button text="Clear" onAction="#clearFields" styleClass="btn, btn-clear"/>
                 </HBox>
+            </VBox>
+
+            <VBox spacing="10" styleClass="card">
+                <padding>
+                    <Insets top="12" right="14" bottom="12" left="14"/>
+                </padding>
+                <Label text="Delete Product" styleClass="section-title"/>
+                <ProductPicker fx:id="deleteProductPicker"/>
+                <GridPane hgap="14" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="14"/><ColumnConstraints percentWidth="36"/>
+                        <ColumnConstraints percentWidth="14"/><ColumnConstraints percentWidth="36"/>
+                    </columnConstraints>
+                    <Label text="ID:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="deleteIdLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label text="Name:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                    <Label fx:id="deleteNameLabel" text="—" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                    <Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="deleteCategoryLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label text="Price:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                    <Label fx:id="deletePriceLabel" text="—" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                    <Label text="Quantity:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="deleteQuantityLabel" text="—" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </GridPane>
+                <Button fx:id="confirmDeleteButton" text="Delete Selected Product" onAction="#deleteProduct"
+                        styleClass="btn, btn-delete"/>
             </VBox>
 
             <Label text="Search Products" styleClass="section-title"/>
@@ -93,7 +121,7 @@
 
             <Label text="Available Products" styleClass="section-title"/>
 
-            <TableView fx:id="productTable" VBox.vgrow="ALWAYS" styleClass="product-table">
+            <TableView fx:id="productTable" prefHeight="260" VBox.vgrow="ALWAYS" styleClass="product-table">
                 <columns>
                     <TableColumn fx:id="productIdColumn" text="Product ID" prefWidth="120"/>
                     <TableColumn fx:id="productNameColumn" text="Product Name" prefWidth="220"/>
@@ -103,5 +131,6 @@
                 </columns>
             </TableView>
         </VBox>
+      </ScrollPane>
     </center>
 </BorderPane>
