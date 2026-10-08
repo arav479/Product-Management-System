@@ -1,7 +1,6 @@
 package com.pms;
 
 public class Supplier {
-    public class Supplier {
 
         private int supplierId;
         private String supplierName;
@@ -33,7 +32,7 @@ public class Supplier {
         }
 
         public String getSupplierName() {
-            return supplierName;
+            return supplierName.toString();
         }
 
         public void setSupplierName(String supplierName) {
@@ -61,4 +60,4 @@ public class Supplier {
             this.address = address;
         }
     }
-}
+

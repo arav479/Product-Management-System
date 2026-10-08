@@ -1,8 +1,6 @@
 package com.pms;
 
 public class Category {
-    public class Category {
-
         public int categoryId;
         public String categoryName;
         public String description;
@@ -19,7 +17,7 @@ public class Category {
             this.categoryId = categoryId;
         }
         public String getCategoryName() {
-            return categoryName;
+            return categoryName.toString();
         }
         public void setCategoryName(String categoryName) {
             this.categoryName = categoryName;
@@ -31,4 +29,4 @@ public class Category {
             this.description = description;
         }
     }
-}
+
