@@ -1,8 +1,13 @@
 package com.pms.ui;
 
+import com.pms.Product;
 import com.pms.ProductManagementApp;
+import com.pms.operation;
+
+import java.util.List;
 
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
@@ -373,12 +378,66 @@ public class ProductListPage extends BorderPane {
 
     private void loadProducts() {
 
-        /*
-         * Backend connection will be added
-         * after P1 is completed.
-         *
-         * For now the table is intentionally empty.
-         */
+        table.setPlaceholder(
+                new Label("Loading products...")
+        );
+
+        // Database work runs off the JavaFX thread so the window stays responsive
+        Task<List<Product>> task =
+                new Task<>() {
+
+                    @Override
+                    protected List<Product> call() throws Exception {
+                        return operation.findAll();
+                    }
+                };
+
+        task.setOnSucceeded(event -> {
+
+            products.clear();
+
+            for (Product product : task.getValue()) {
+
+                products.add(
+                        new ProductRow(
+                                product.getProductId(),
+                                product.getProductName(),
+                                product.getDescription(),
+                                product.getCategoryName(),
+                                product.getSupplierName(),
+                                product.getPrice(),
+                                product.getQuantity(),
+                                product.getReorderLevel()
+                        )
+                );
+            }
+
+            table.setPlaceholder(
+                    new Label("No products found")
+            );
+
+            updateCategoryFilter();
+        });
+
+        task.setOnFailed(event -> {
+
+            Throwable error =
+                    task.getException();
+
+            table.setPlaceholder(
+                    new Label("Could not load products: "
+                            + error.getMessage())
+            );
+
+            error.printStackTrace();
+        });
+
+        Thread thread =
+                new Thread(task);
+
+        thread.setDaemon(true);
+
+        thread.start();
     }
 
     // ================= CATEGORY FILTER DATA =================
