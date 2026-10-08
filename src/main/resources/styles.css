@@ -1,0 +1,393 @@
+/* =========================================================
+   PRODUCT MANAGEMENT SYSTEM
+   UNIQUE MODERN DASHBOARD THEME
+   ========================================================= */
+
+
+/* ================= GLOBAL ================= */
+
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #08111f;
+    -fx-font-size: 14px;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+    -fx-background-color: #0d1b2e;
+
+    -fx-padding: 22px 30px;
+
+    -fx-border-color: #16304a;
+    -fx-border-width: 0 0 1px 0;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 0, 0, 0.35),
+        15,
+        0.2,
+        0,
+        4
+    );
+}
+
+.page-title {
+    -fx-font-size: 27px;
+    -fx-font-weight: 800;
+
+    -fx-text-fill: #f8fafc;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    -fx-background-color: #07101d;
+
+    -fx-pref-width: 245px;
+
+    -fx-padding: 28px 16px;
+
+    -fx-border-color: #14283d;
+    -fx-border-width: 0 1px 0 0;
+}
+
+
+/* ================= NAVIGATION ================= */
+
+.nav-button {
+    -fx-background-color: transparent;
+
+    -fx-text-fill: #8fa3b8;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+
+    -fx-alignment: CENTER_LEFT;
+
+    -fx-padding: 14px 18px;
+
+    -fx-background-radius: 10px;
+
+    -fx-border-radius: 10px;
+
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #102337;
+
+    -fx-text-fill: #e2faff;
+}
+
+.nav-button:pressed {
+    -fx-background-color: #15324b;
+}
+
+
+/* Active navigation */
+
+.nav-active {
+    -fx-background-color: #00c2d7;
+
+    -fx-text-fill: #04131c;
+
+    -fx-font-weight: 800;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 194, 215, 0.45),
+        14,
+        0.3,
+        0,
+        3
+    );
+}
+
+.nav-active:hover {
+    -fx-background-color: #16d9ec;
+
+    -fx-text-fill: #04131c;
+}
+
+
+/* ================= MAIN CONTENT ================= */
+
+.section-title {
+    -fx-font-size: 21px;
+
+    -fx-font-weight: 800;
+
+    -fx-text-fill: #eaf6ff;
+}
+
+
+/* ================= SEARCH ================= */
+
+.text-field {
+    -fx-background-color: #0d1b2e;
+
+    -fx-text-fill: #e8f4ff;
+
+    -fx-prompt-text-fill: #60758a;
+
+    -fx-font-size: 14px;
+
+    -fx-padding: 11px 15px;
+
+    -fx-border-color: #1b3852;
+
+    -fx-border-width: 1px;
+
+    -fx-border-radius: 10px;
+
+    -fx-background-radius: 10px;
+}
+
+.text-field:hover {
+    -fx-border-color: #2b5878;
+}
+
+.text-field:focused {
+    -fx-border-color: #00c2d7;
+
+    -fx-border-width: 1.5px;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 194, 215, 0.3),
+        12,
+        0.2,
+        0,
+        0
+    );
+}
+
+
+/* ================= TABLE ================= */
+
+.table-view {
+    -fx-background-color: #0b1727;
+
+    -fx-control-inner-background: #0b1727;
+
+    -fx-border-color: #173149;
+
+    -fx-border-width: 1px;
+
+    -fx-border-radius: 12px;
+
+    -fx-background-radius: 12px;
+
+    -fx-padding: 0;
+}
+
+
+/* Table header */
+
+.table-view .column-header-background {
+    -fx-background-color: #102238;
+
+    -fx-background-radius: 12px 12px 0 0;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+
+    -fx-padding: 14px 10px;
+
+    -fx-border-color: transparent transparent #1b3852 transparent;
+
+    -fx-border-width: 0 0 1px 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #75dbe8;
+
+    -fx-font-size: 12px;
+
+    -fx-font-weight: 800;
+}
+
+
+/* Table rows */
+
+.table-row-cell {
+    -fx-background-color: #0b1727;
+
+    -fx-border-color: transparent transparent #132a40 transparent;
+
+    -fx-border-width: 0 0 1px 0;
+
+    -fx-cell-size: 48px;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #10263b;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #123d50;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #9ff7ff;
+}
+
+
+/* Table cells */
+
+.table-cell {
+    -fx-text-fill: #d5e4ef;
+
+    -fx-padding: 9px 10px;
+
+    -fx-border-color: transparent;
+}
+
+
+/* ================= LOW STOCK ================= */
+
+.low-stock {
+    -fx-background-color: #3a2027;
+}
+
+.low-stock:hover {
+    -fx-background-color: #4b252e;
+}
+
+
+/* ================= BUTTONS ================= */
+
+.button {
+    -fx-cursor: hand;
+}
+
+.action-button {
+    -fx-background-color: #00c2d7;
+
+    -fx-text-fill: #04131c;
+
+    -fx-font-size: 14px;
+
+    -fx-font-weight: 800;
+
+    -fx-padding: 10px 18px;
+
+    -fx-background-radius: 9px;
+
+    -fx-border-radius: 9px;
+}
+
+.action-button:hover {
+    -fx-background-color: #18d9eb;
+
+    -fx-effect: dropshadow(
+        gaussian,
+        rgba(0, 194, 215, 0.35),
+        10,
+        0.2,
+        0,
+        2
+    );
+}
+
+.action-button:pressed {
+    -fx-background-color: #00a6b8;
+}
+
+
+/* ================= FORM LABELS ================= */
+
+.form-label {
+    -fx-font-size: 13px;
+
+    -fx-font-weight: 700;
+
+    -fx-text-fill: #9fb4c7;
+}
+
+
+/* ================= COMBO BOX ================= */
+
+.combo-box {
+    -fx-background-color: #0d1b2e;
+
+    -fx-border-color: #1b3852;
+
+    -fx-border-radius: 9px;
+
+    -fx-background-radius: 9px;
+}
+
+.combo-box:hover {
+    -fx-border-color: #2b5878;
+}
+
+.combo-box:focused {
+    -fx-border-color: #00c2d7;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: #0d1b2e;
+
+    -fx-text-fill: #d5e4ef;
+}
+
+
+/* ================= SCROLLBAR ================= */
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #091525;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #29445b;
+
+    -fx-background-radius: 10px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #3a627d;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+
+    -fx-padding: 0;
+}
+
+
+/* ================= ALERT ================= */
+
+.dialog-pane {
+    -fx-background-color: #0d1b2e;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #102238;
+}
+
+.dialog-pane .content {
+    -fx-padding: 20px;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: #d5e4ef;
+}
+
+
+/* ================= FOCUS ================= */
+
+*:focused {
+    -fx-focus-color: transparent;
+
+    -fx-faint-focus-color: transparent;
+}
