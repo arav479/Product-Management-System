@@ -1,4 +1,4 @@
-package pms;
+package com.pms;
 
 /**
  * Frontend Product model used by the JavaFX TableView and form.

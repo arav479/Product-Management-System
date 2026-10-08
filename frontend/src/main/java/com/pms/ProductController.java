@@ -1,4 +1,4 @@
-package pms;
+package com.pms;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

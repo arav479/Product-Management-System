@@ -1,4 +1,4 @@
-package pms;
+package com.pms;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
