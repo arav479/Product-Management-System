@@ -1,393 +1,762 @@
 /* =========================================================
    PRODUCT MANAGEMENT SYSTEM
-   UNIQUE MODERN DASHBOARD THEME
+   Warm "sandal + sunset" theme
+   ---------------------------------------------------------
+   Every colour is defined once in .root as a looked-up colour
+   and reused below. To retheme, change only the .root block.
+
+   About the "transition:" lines:
+   CSS transitions need JavaFX 23+. Older JavaFX versions skip
+   the unknown property, so hover/pressed effects still work,
+   they just change instantly instead of animating.
    ========================================================= */
 
 
-/* ================= GLOBAL ================= */
+/* =========================================================
+   1. ROOT / PALETTE
+   ========================================================= */
 
 .root {
-    -fx-font-family: "Segoe UI";
-    -fx-background-color: #08111f;
-    -fx-font-size: 14px;
-}
+    /* ---- Palette ---- */
+    -sandal:        #F3E3C7;   /* main window background            */
+    -sandal-light:  #FBF4E6;   /* cards, table rows, input fields   */
+    -sandal-dark:   #E2CBA5;   /* borders, dividers, alternate rows */
+    -orange:        #FF8243;   /* primary buttons, selected items   */
+    -pink:          #FFC0CB;   /* secondary buttons, hover          */
+    -yellow:        #FCE883;   /* warnings, badges, focus glow      */
+    -teal:          #069494;   /* headings, table header, accents   */
+    -text-dark:     #3B2F2A;   /* body text (warm dark brown)       */
+    -white:         #FFFFFF;
 
+    /* ---- Feed the palette into Modena's built-in variables so
+            controls we don't style explicitly still match ---- */
+    -fx-base:                            -sandal;
+    -fx-background:                      -sandal;
+    -fx-control-inner-background:        -sandal-light;
+    -fx-control-inner-background-alt:    -sandal;
+    -fx-accent:                          -orange;
+    -fx-selection-bar:                   -orange;
+    -fx-selection-bar-non-focused:       derive(-orange, 25%);
+    -fx-cell-hover-color:                -pink;
+    -fx-text-base-color:                 -text-dark;
+    -fx-text-background-color:           -text-dark;
+    -fx-text-inner-color:                -text-dark;
+    -fx-dark-text-color:                 -text-dark;
+    -fx-mid-text-color:                  -text-dark;
+    -fx-light-text-color:                -white;
+    -fx-prompt-text-fill:                derive(-text-dark, 55%);
 
-/* ================= HEADER ================= */
+    /* No default blue focus rings anywhere */
+    -fx-focus-color:                     transparent;
+    -fx-faint-focus-color:               transparent;
 
-.header {
-    -fx-background-color: #0d1b2e;
-
-    -fx-padding: 22px 30px;
-
-    -fx-border-color: #16304a;
-    -fx-border-width: 0 0 1px 0;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0, 0, 0, 0.35),
-        15,
-        0.2,
-        0,
-        4
-    );
-}
-
-.page-title {
-    -fx-font-size: 27px;
-    -fx-font-weight: 800;
-
-    -fx-text-fill: #f8fafc;
-}
-
-
-/* ================= SIDEBAR ================= */
-
-.sidebar {
-    -fx-background-color: #07101d;
-
-    -fx-pref-width: 245px;
-
-    -fx-padding: 28px 16px;
-
-    -fx-border-color: #14283d;
-    -fx-border-width: 0 1px 0 0;
-}
-
-
-/* ================= NAVIGATION ================= */
-
-.nav-button {
-    -fx-background-color: transparent;
-
-    -fx-text-fill: #8fa3b8;
-
-    -fx-font-size: 14px;
-    -fx-font-weight: 600;
-
-    -fx-alignment: CENTER_LEFT;
-
-    -fx-padding: 14px 18px;
-
-    -fx-background-radius: 10px;
-
-    -fx-border-radius: 10px;
-
-    -fx-cursor: hand;
-}
-
-.nav-button:hover {
-    -fx-background-color: #102337;
-
-    -fx-text-fill: #e2faff;
-}
-
-.nav-button:pressed {
-    -fx-background-color: #15324b;
-}
-
-
-/* Active navigation */
-
-.nav-active {
-    -fx-background-color: #00c2d7;
-
-    -fx-text-fill: #04131c;
-
-    -fx-font-weight: 800;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0, 194, 215, 0.45),
-        14,
-        0.3,
-        0,
-        3
-    );
-}
-
-.nav-active:hover {
-    -fx-background-color: #16d9ec;
-
-    -fx-text-fill: #04131c;
-}
-
-
-/* ================= MAIN CONTENT ================= */
-
-.section-title {
-    -fx-font-size: 21px;
-
-    -fx-font-weight: 800;
-
-    -fx-text-fill: #eaf6ff;
-}
-
-
-/* ================= SEARCH ================= */
-
-.text-field {
-    -fx-background-color: #0d1b2e;
-
-    -fx-text-fill: #e8f4ff;
-
-    -fx-prompt-text-fill: #60758a;
-
+    /* ---- Base typography ---- */
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "Arial", sans-serif;
     -fx-font-size: 14px;
 
-    -fx-padding: 11px 15px;
-
-    -fx-border-color: #1b3852;
-
-    -fx-border-width: 1px;
-
-    -fx-border-radius: 10px;
-
-    -fx-background-radius: 10px;
-}
-
-.text-field:hover {
-    -fx-border-color: #2b5878;
-}
-
-.text-field:focused {
-    -fx-border-color: #00c2d7;
-
-    -fx-border-width: 1.5px;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0, 194, 215, 0.3),
-        12,
-        0.2,
-        0,
-        0
-    );
+    -fx-background-color: -sandal;
 }
 
 
-/* ================= TABLE ================= */
+/* =========================================================
+   2. TYPOGRAPHY
+   ========================================================= */
 
-.table-view {
-    -fx-background-color: #0b1727;
-
-    -fx-control-inner-background: #0b1727;
-
-    -fx-border-color: #173149;
-
-    -fx-border-width: 1px;
-
-    -fx-border-radius: 12px;
-
-    -fx-background-radius: 12px;
-
-    -fx-padding: 0;
+.label {
+    -fx-text-fill: -text-dark;
 }
 
-
-/* Table header */
-
-.table-view .column-header-background {
-    -fx-background-color: #102238;
-
-    -fx-background-radius: 12px 12px 0 0;
-}
-
-.table-view .column-header {
-    -fx-background-color: transparent;
-
-    -fx-padding: 14px 10px;
-
-    -fx-border-color: transparent transparent #1b3852 transparent;
-
-    -fx-border-width: 0 0 1px 0;
-}
-
-.table-view .column-header .label {
-    -fx-text-fill: #75dbe8;
-
-    -fx-font-size: 12px;
-
-    -fx-font-weight: 800;
-}
-
-
-/* Table rows */
-
-.table-row-cell {
-    -fx-background-color: #0b1727;
-
-    -fx-border-color: transparent transparent #132a40 transparent;
-
-    -fx-border-width: 0 0 1px 0;
-
-    -fx-cell-size: 48px;
-}
-
-.table-row-cell:hover {
-    -fx-background-color: #10263b;
-}
-
-.table-row-cell:selected {
-    -fx-background-color: #123d50;
-}
-
-.table-row-cell:selected .text {
-    -fx-fill: #9ff7ff;
-}
-
-
-/* Table cells */
-
-.table-cell {
-    -fx-text-fill: #d5e4ef;
-
-    -fx-padding: 9px 10px;
-
+.hyperlink {
+    -fx-text-fill: -teal;
     -fx-border-color: transparent;
 }
 
-
-/* ================= LOW STOCK ================= */
-
-.low-stock {
-    -fx-background-color: #3a2027;
+.hyperlink:hover {
+    -fx-underline: true;
 }
 
-.low-stock:hover {
-    -fx-background-color: #4b252e;
+.hyperlink:visited {
+    -fx-text-fill: derive(-teal, -20%);
+}
+
+.titled-pane > .title > .text {
+    -fx-fill: -teal;
+    -fx-font-weight: bold;
 }
 
 
-/* ================= BUTTONS ================= */
+/* =========================================================
+   3. BUTTONS
+   ========================================================= */
+
+/* ---- Primary (default for every .button) ---- */
 
 .button {
-    -fx-cursor: hand;
-}
-
-.action-button {
-    -fx-background-color: #00c2d7;
-
-    -fx-text-fill: #04131c;
-
+    -fx-background-color: -orange;
+    -fx-text-fill: -white;
+    -fx-font-weight: bold;
     -fx-font-size: 14px;
+    -fx-padding: 9px 20px;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
 
-    -fx-font-weight: 800;
-
-    -fx-padding: 10px 18px;
-
-    -fx-background-radius: 9px;
-
-    -fx-border-radius: 9px;
+    /* JavaFX 23+ only: smooth hover/press animation (ignored on older versions) */
+    transition: -fx-scale-x 180ms ease-out,
+                -fx-scale-y 180ms ease-out,
+                -fx-background-color 200ms;
 }
 
-.action-button:hover {
-    -fx-background-color: #18d9eb;
-
-    -fx-effect: dropshadow(
-        gaussian,
-        rgba(0, 194, 215, 0.35),
-        10,
-        0.2,
-        0,
-        2
-    );
+.button:hover {
+    -fx-background-color: derive(-orange, 18%);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.28), 18, 0, 0, 6);
 }
 
-.action-button:pressed {
-    -fx-background-color: #00a6b8;
+.button:pressed {
+    -fx-background-color: derive(-orange, -8%);
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.12), 6, 0, 0, 2);
+}
+
+.button:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Keyboard focus: a yellow ring instead of the default blue */
+.button:focused {
+    -fx-border-color: -yellow;
+    -fx-border-width: 2px;
+}
+
+/* ---- Secondary: add style class "secondary" ---- */
+
+.button.secondary {
+    -fx-background-color: -pink;
+    -fx-text-fill: -text-dark;
+}
+
+.button.secondary:hover {
+    -fx-background-color: derive(-pink, 30%);
+}
+
+.button.secondary:pressed {
+    -fx-background-color: derive(-pink, -8%);
+}
+
+/* ---- Toggle / check / radio accents ---- */
+
+.check-box > .box,
+.radio-button > .radio {
+    -fx-background-color: -sandal-dark, -sandal-light;
+    -fx-background-insets: 0, 1;
+}
+
+.check-box > .box     { -fx-background-radius: 4px, 3px; }
+.radio-button > .radio { -fx-background-radius: 1em; }
+
+.check-box:selected > .box > .mark,
+.radio-button:selected > .radio > .dot {
+    -fx-background-color: -orange;
 }
 
 
-/* ================= FORM LABELS ================= */
+/* =========================================================
+   4. INPUTS (text fields, text areas, combo boxes, pickers)
+   ========================================================= */
 
-.form-label {
-    -fx-font-size: 13px;
+.text-field,
+.password-field,
+.text-area,
+.combo-box,
+.choice-box,
+.date-picker,
+.spinner {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 10px;
+    -fx-border-color: -sandal-dark;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1.5px;
+    -fx-background-insets: 0;
+    -fx-text-fill: -text-dark;
+    -fx-highlight-fill: -orange;
+    -fx-highlight-text-fill: -white;
 
-    -fx-font-weight: 700;
-
-    -fx-text-fill: #9fb4c7;
+    /* JavaFX 23+ only (ignored on older versions) */
+    transition: -fx-border-color 200ms;
 }
 
-
-/* ================= COMBO BOX ================= */
-
-.combo-box {
-    -fx-background-color: #0d1b2e;
-
-    -fx-border-color: #1b3852;
-
-    -fx-border-radius: 9px;
-
-    -fx-background-radius: 9px;
+.text-field,
+.password-field {
+    -fx-padding: 8px 12px;
 }
 
-.combo-box:hover {
-    -fx-border-color: #2b5878;
+/* TextArea's inner content gets the same background */
+.text-area .content {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 10px;
+    -fx-padding: 6px 8px;
 }
 
-.combo-box:focused {
-    -fx-border-color: #00c2d7;
+.text-area .scroll-pane,
+.text-area .viewport {
+    -fx-background-color: transparent;
 }
+
+/* ---- Hover: orange border ---- */
+
+.text-field:hover,
+.password-field:hover,
+.text-area:hover,
+.combo-box:hover,
+.choice-box:hover,
+.date-picker:hover,
+.spinner:hover {
+    -fx-border-color: -orange;
+}
+
+/* ---- Focus: teal border + soft yellow glow ---- */
+
+.text-field:focused,
+.password-field:focused,
+.text-area:focused,
+.combo-box:focused,
+.choice-box:focused,
+.date-picker:focused,
+.spinner:focused {
+    -fx-border-color: -teal;
+    /* the -yellow colour (#FCE883) written out: effects can't use looked-up colours */
+    -fx-effect: dropshadow(gaussian, rgba(252,232,131,0.9), 10, 0.5, 0, 0);
+}
+
+/* ---- Combo box internals ---- */
 
 .combo-box .list-cell {
-    -fx-background-color: #0d1b2e;
-
-    -fx-text-fill: #d5e4ef;
-}
-
-
-/* ================= SCROLLBAR ================= */
-
-.scroll-bar {
     -fx-background-color: transparent;
+    -fx-text-fill: -text-dark;
+    -fx-padding: 6px 10px;
 }
 
-.scroll-bar .track {
-    -fx-background-color: #091525;
-}
-
-.scroll-bar .thumb {
-    -fx-background-color: #29445b;
-
-    -fx-background-radius: 10px;
-}
-
-.scroll-bar .thumb:hover {
-    -fx-background-color: #3a627d;
-}
-
-.scroll-bar .increment-button,
-.scroll-bar .decrement-button {
+.combo-box .arrow-button,
+.date-picker .arrow-button,
+.choice-box .open-button {
     -fx-background-color: transparent;
+    -fx-background-radius: 0 10px 10px 0;
+}
 
+.combo-box .arrow,
+.date-picker .arrow,
+.choice-box .arrow {
+    -fx-background-color: -teal;
+}
+
+/* Date picker's own text field shouldn't draw a second border */
+.date-picker .text-field {
+    -fx-border-color: transparent;
+    -fx-effect: null;
+}
+
+
+/* =========================================================
+   5. TABLE VIEW
+   ========================================================= */
+
+.table-view {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 14px;
+    -fx-border-color: -sandal-dark;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-table-cell-border-color: transparent;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+/* Remove the default blue focus border */
+.table-view:focused {
+    -fx-background-insets: 0;
+    -fx-border-color: -sandal-dark;
+}
+
+/* ---- Header ---- */
+
+.table-view .column-header-background {
+    -fx-background-color: -teal;
+    -fx-background-radius: 14px 14px 0 0;
     -fx-padding: 0;
 }
 
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent derive(-teal, 15%) transparent transparent;
+    -fx-border-width: 0 1px 0 0;
+    -fx-padding: 10px 8px;
+}
 
-/* ================= ALERT ================= */
+.table-view .column-header .label {
+    -fx-text-fill: -white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.table-view .column-header .arrow {
+    -fx-background-color: -yellow;
+}
+
+/* Column drag indicator / overlay */
+.table-view .column-drag-header {
+    -fx-background-color: derive(-teal, 20%);
+}
+
+/* ---- Rows: alternating sandal-light / sandal ---- */
+
+.table-row-cell {
+    -fx-background-color: -sandal-light;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent transparent -sandal-dark transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-cell-size: 42px;
+    -fx-text-fill: -text-dark;
+
+    /* JavaFX 23+ only (ignored on older versions) */
+    transition: -fx-background-color 150ms;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: -sandal;
+}
+
+.table-row-cell .table-cell {
+    -fx-text-fill: -text-dark;
+    -fx-padding: 6px 10px;
+    -fx-border-color: transparent;
+}
+
+/* Hover (declared before :selected so selection wins) */
+.table-row-cell:hover {
+    -fx-background-color: -pink;
+}
+
+.table-row-cell:filled:selected,
+.table-row-cell:filled:selected:hover {
+    -fx-background-color: -orange;
+}
+
+.table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: -white;
+    -fx-font-weight: bold;
+}
+
+/* Empty rows below the data: no stripes or hover */
+.table-row-cell:empty,
+.table-row-cell:empty:hover {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/* Text shown when the table has no rows */
+.table-view .placeholder .label {
+    -fx-text-fill: derive(-text-dark, 35%);
+    -fx-font-style: italic;
+}
+
+
+/* =========================================================
+   6. LIST VIEW, TREE VIEW, TAB PANE, MENU BAR
+   ========================================================= */
+
+.list-view,
+.tree-view {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 14px;
+    -fx-border-color: -sandal-dark;
+    -fx-border-radius: 14px;
+    -fx-padding: 4px;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+.list-view:focused,
+.tree-view:focused {
+    -fx-background-insets: 0;
+}
+
+.list-cell,
+.tree-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -text-dark;
+    -fx-padding: 7px 10px;
+    -fx-background-radius: 8px;
+
+    /* JavaFX 23+ only (ignored on older versions) */
+    transition: -fx-background-color 150ms;
+}
+
+.list-cell:filled:hover,
+.tree-cell:filled:hover {
+    -fx-background-color: -pink;
+}
+
+.list-cell:filled:selected,
+.list-cell:filled:selected:hover,
+.tree-cell:filled:selected,
+.tree-cell:filled:selected:hover {
+    -fx-background-color: -orange;
+    -fx-text-fill: -white;
+}
+
+/* ---- Tab pane ---- */
+
+.tab-pane .tab-header-background {
+    -fx-background-color: -sandal;
+}
+
+.tab-pane .tab {
+    -fx-background-color: -sandal-dark;
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-padding: 4px 14px;
+}
+
+.tab-pane .tab:hover {
+    -fx-background-color: -pink;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: -teal;
+}
+
+.tab-pane .tab .tab-label {
+    -fx-text-fill: -text-dark;
+}
+
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: -white;
+    -fx-font-weight: bold;
+}
+
+.tab-pane > .tab-content-area {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 0 14px 14px 14px;
+}
+
+/* ---- Menu bar ---- */
+
+.menu-bar {
+    -fx-background-color: -sandal-light;
+    -fx-border-color: transparent transparent -sandal-dark transparent;
+}
+
+.menu-bar .menu .label {
+    -fx-text-fill: -text-dark;
+}
+
+.menu-bar .menu:hover,
+.menu-bar .menu:showing {
+    -fx-background-color: -pink;
+    -fx-background-radius: 8px;
+}
+
+
+/* =========================================================
+   7. SCROLL BARS (thin, rounded)
+   ========================================================= */
+
+.scroll-bar {
+    -fx-background-color: transparent;
+    -fx-padding: 2px;
+}
+
+.scroll-bar:vertical   { -fx-pref-width: 10px; }
+.scroll-bar:horizontal { -fx-pref-height: 10px; }
+
+.scroll-bar .track,
+.scroll-bar .track-background {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: -sandal-dark;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+
+    /* JavaFX 23+ only (ignored on older versions) */
+    transition: -fx-background-color 200ms;
+}
+
+.scroll-bar .thumb:hover,
+.scroll-bar .thumb:pressed {
+    -fx-background-color: -teal;
+}
+
+/* Hide the arrow buttons for a cleaner look */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow {
+    -fx-shape: null;
+    -fx-padding: 0;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: transparent;
+}
+
+
+/* =========================================================
+   8. POPUPS & DIALOGS
+   ========================================================= */
+
+/* ---- ComboBox / ChoiceBox dropdown list ---- */
+
+.combo-box-popup .list-view {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 10px;
+    -fx-border-color: -sandal-dark;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-color: -pink;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: -orange;
+    -fx-text-fill: -white;
+}
+
+/* ---- Context menu (also used by ChoiceBox and MenuBar menus) ---- */
+
+.context-menu {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 10px;
+    -fx-border-color: -sandal-dark;
+    -fx-border-radius: 10px;
+    -fx-padding: 4px;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+.context-menu .menu-item {
+    -fx-background-radius: 6px;
+    -fx-padding: 6px 14px;
+}
+
+.context-menu .menu-item .label {
+    -fx-text-fill: -text-dark;
+}
+
+.context-menu .menu-item:focused,
+.context-menu .menu-item:hover {
+    -fx-background-color: -pink;
+}
+
+.context-menu .separator .line {
+    -fx-border-color: -sandal-dark transparent transparent transparent;
+}
+
+/* ---- Tooltip ---- */
+
+.tooltip {
+    -fx-background-color: -text-dark;
+    -fx-text-fill: -sandal-light;
+    -fx-font-size: 12px;
+    -fx-background-radius: 8px;
+    -fx-padding: 6px 10px;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+/* ---- Alert / DialogPane ---- */
 
 .dialog-pane {
-    -fx-background-color: #0d1b2e;
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 14px;
 }
 
-.dialog-pane .header-panel {
-    -fx-background-color: #102238;
+.dialog-pane > .header-panel {
+    -fx-background-color: -teal;
+    -fx-padding: 14px 18px;
 }
 
-.dialog-pane .content {
-    -fx-padding: 20px;
+.dialog-pane > .header-panel .label {
+    -fx-text-fill: -white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
 }
 
-.dialog-pane .label {
-    -fx-text-fill: #d5e4ef;
+.dialog-pane > .content {
+    -fx-padding: 18px;
+}
+
+.dialog-pane > .content.label {
+    -fx-text-fill: -text-dark;
+}
+
+.dialog-pane > .button-bar > .container {
+    -fx-padding: 10px 14px 14px 14px;
+}
+
+/* Warning-style accent for the dialog graphic area */
+.dialog-pane .graphic-container {
+    -fx-padding: 0 8px 0 0;
 }
 
 
-/* ================= FOCUS ================= */
+/* =========================================================
+   9. APP-SPECIFIC CLASSES
+   ---------------------------------------------------------
+   These style classes are already set in the Java code
+   (ProductManagementApp and the ui/ pages), so no code
+   change is needed to use them.
+   ========================================================= */
 
-*:focused {
-    -fx-focus-color: transparent;
+/* ---- Header bar ---- */
 
-    -fx-faint-focus-color: transparent;
+.header {
+    -fx-background-color: -sandal-light;
+    -fx-padding: 20px 28px;
+    -fx-border-color: transparent transparent -sandal-dark transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+.page-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -teal;
+}
+
+.page-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: derive(-text-dark, 35%);
+}
+
+/* ---- Sidebar ---- */
+
+.sidebar {
+    -fx-background-color: -sandal-dark;
+    -fx-pref-width: 240px;
+}
+
+.logo {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -teal;
+}
+
+.brand-subtitle {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -orange;
+}
+
+.button.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -text-dark;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 12px 16px;
+    -fx-effect: null;
+}
+
+.button.nav-button:hover {
+    -fx-background-color: -pink;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.button.nav-button:focused {
+    -fx-border-color: transparent;
+}
+
+.button.nav-active,
+.button.nav-active:hover {
+    -fx-background-color: -orange;
+    -fx-text-fill: -white;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+/* ---- Content area, cards and forms ---- */
+
+.content {
+    -fx-padding: 24px;
+}
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -teal;
+    -fx-padding: 8px 0 4px 0;
+}
+
+.card {
+    -fx-background-color: -sandal-light;
+    -fx-background-radius: 14px;
+    -fx-border-color: -sandal-dark;
+    -fx-border-radius: 14px;
+    -fx-padding: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(59,47,42,0.15), 12, 0, 0, 4);
+}
+
+.form-grid {
+    -fx-hgap: 14px;
+    -fx-vgap: 12px;
+}
+
+.form-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -text-dark;
+}
+
+.form-actions {
+    -fx-padding: 16px 0 0 0;
+    -fx-spacing: 10px;
+}
+
+/* Form buttons: Save = primary orange, Clear = secondary pink */
+.button.btn-neutral {
+    -fx-background-color: -pink;
+    -fx-text-fill: -text-dark;
+}
+
+.button.btn-neutral:hover {
+    -fx-background-color: derive(-pink, 30%);
+}
+
+/* ---- Low-stock rows in the product list ---- */
+
+.table-row-cell.low-stock {
+    -fx-background-color: -yellow;
+}
+
+.table-row-cell.low-stock:hover {
+    -fx-background-color: derive(-yellow, -10%);
+}
+
+.table-row-cell.low-stock:filled:selected {
+    -fx-background-color: -orange;
 }

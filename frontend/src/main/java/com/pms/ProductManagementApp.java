@@ -1,14 +1,22 @@
 package com.pms;
 
+import com.pms.ui.AddProductPage;
+import com.pms.ui.DeleteProductPage;
 import com.pms.ui.ProductListPage;
+import com.pms.ui.UpdateProductPage;
+
+import java.util.List;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -16,8 +24,19 @@ import javafx.stage.Stage;
 
 public class ProductManagementApp extends Application {
 
-    private final ObservableList<Object> products =
+    // Shared with the Add/Update/Delete pages; refresh() reloads them from the database
+    private final ObservableList<Product> products =
             FXCollections.observableArrayList();
+
+    private final ObservableList<Category> categories =
+            FXCollections.observableArrayList();
+
+    private final ObservableList<Supplier> suppliers =
+            FXCollections.observableArrayList();
+
+    private Button updateButton;
+
+    private UpdateProductPage updatePage;
 
     private final BorderPane root =
             new BorderPane();
@@ -59,6 +78,8 @@ public class ProductManagementApp extends Application {
         stage.setUserData(this);
 
         stage.show();
+
+        refresh();
 
         showInitialPage();
     }
@@ -148,6 +169,8 @@ public class ProductManagementApp extends Application {
                 createNavButton(
                         "✎   Update Product"
                 );
+
+        updateButton = updateProduct;
 
         Button deleteProduct =
                 createNavButton(
@@ -262,93 +285,132 @@ public class ProductManagementApp extends Application {
         activeButton =
                 selectedButton;
 
-        if (pageName.equals(
-                "All Products")) {
+        switch (pageName) {
 
-            ProductListPage productListPage =
-                    new ProductListPage();
+            case "Add Product":
 
-            root.setCenter(
-                    productListPage
-            );
+                root.setCenter(
+                        new AddProductPage(
+                                categories,
+                                suppliers,
+                                this::refresh
+                        )
+                );
+                break;
 
-        } else {
+            case "Update Product":
 
-            VBox content =
-                    new VBox(20);
+                updatePage =
+                        new UpdateProductPage(
+                                products,
+                                categories,
+                                suppliers,
+                                this::refresh
+                        );
 
-            content.setPadding(
-                    new Insets(30)
-            );
+                root.setCenter(
+                        updatePage
+                );
+                break;
 
-            Label label =
-                    new Label(pageName);
+            case "Delete Product":
 
-            label.setStyle(
-                    "-fx-font-size: 24px;" +
-                    "-fx-font-weight: bold;" +
-                    "-fx-text-fill: #eaf6ff;"
-            );
+                root.setCenter(
+                        new DeleteProductPage(
+                                products
+                        )
+                );
+                break;
 
-            content.getChildren()
-                    .add(label);
+            default:
 
-            root.setCenter(
-                    content
-            );
+                root.setCenter(
+                        new ProductListPage()
+                );
         }
     }
 
     // ================= SHARED DATA =================
 
-    public ObservableList<Object> getProducts() {
+    public ObservableList<Product> getProducts() {
 
         return products;
     }
 
+    /**
+     * Reloads products, categories and suppliers from the database.
+     * Runs off the JavaFX thread; the shared lists are updated when done.
+     */
     public void refresh() {
 
-        /*
-         * Backend connection will be added
-         * when P1's backend is connected.
-         */
+        Task<Void> task =
+                new Task<>() {
+
+                    private List<Product> loadedProducts;
+                    private List<Category> loadedCategories;
+                    private List<Supplier> loadedSuppliers;
+
+                    @Override
+                    protected Void call() throws Exception {
+
+                        loadedProducts = operation.findAll();
+                        loadedCategories = operation.findAllCategories();
+                        loadedSuppliers = operation.findAllSuppliers();
+                        return null;
+                    }
+
+                    @Override
+                    protected void succeeded() {
+
+                        products.setAll(loadedProducts);
+                        categories.setAll(loadedCategories);
+                        suppliers.setAll(loadedSuppliers);
+                    }
+                };
+
+        task.setOnFailed(event -> {
+
+            Alert alert =
+                    new Alert(
+                            Alert.AlertType.ERROR,
+                            "Could not load data from the database.\n"
+                                    + task.getException().getMessage(),
+                            ButtonType.OK
+                    );
+
+            alert.setHeaderText(null);
+
+            alert.show();
+        });
+
+        Thread thread =
+                new Thread(task);
+
+        thread.setDaemon(true);
+
+        thread.start();
     }
 
     // ================= UPDATE =================
 
+    /** Called on a double-click in the product list. */
     public void openUpdate(
-            Object product) {
+            ProductListPage.ProductRow row) {
 
-        pageTitle.setText(
-                "Update Product"
+        showPage(
+                "Update Product",
+                "Modify existing product details",
+                updateButton
         );
 
-        pageSubtitle.setText(
-                "Modify existing product details"
-        );
+        for (Product product : products) {
 
-        VBox content =
-                new VBox(20);
+            if (product.getProductId() == row.getProductId()) {
 
-        content.setPadding(
-                new Insets(30)
-        );
-
-        Label label =
-                new Label("Update Product");
-
-        label.setStyle(
-                "-fx-font-size: 24px;" +
-                "-fx-font-weight: bold;" +
-                "-fx-text-fill: #eaf6ff;"
-        );
-
-        content.getChildren()
-                .add(label);
-
-        root.setCenter(
-                content
-        );
+                updatePage.openUpdate(product);
+                return;
+            }
+        }
     }
 
     // ================= MAIN =================

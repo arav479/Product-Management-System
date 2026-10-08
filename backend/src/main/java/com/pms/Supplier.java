@@ -59,5 +59,10 @@ public class Supplier {
         public void setAddress(String address) {
             this.address = address;
         }
+        // Shown in the frontend's supplier dropdown
+        @Override
+        public String toString() {
+            return supplierName;
+        }
     }
 
